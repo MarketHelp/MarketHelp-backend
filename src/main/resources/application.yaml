@@ -1,0 +1,9 @@
+
+db:
+  jdbcUrl: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:graphontext}"
+  username: ${DATABASE_USERNAME:graphontext}
+  password: ${DATABASE_PASSWORD:graphontext}
+  poolName: application
+
+liquibase:
+  changelog: "liquibase/changelog.yaml"

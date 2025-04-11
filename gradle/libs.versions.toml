@@ -1,0 +1,37 @@
+[versions]
+kotlin = "1.9.25"
+kotlinx = "1.8.1"
+
+kora = "1.1.23"
+jwt = "0.12.6"
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ksp-devtools = { id = "com.google.devtools.ksp", version = "1.9.25-1.0.20" }
+openapi-generator = { id = "org.openapi.generator", version = "7.4.0" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.7" }
+
+[libraries]
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx" }
+kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "kotlinx" }
+
+kora-bom = { module = "ru.tinkoff.kora:kora-parent", version.ref = "kora" }
+kora-ksp = { module = "ru.tinkoff.kora:symbol-processors", version.ref = "kora" }
+kora-openapi-generator = { module = "ru.tinkoff.kora:openapi-generator", version = "1.1.9" }
+
+kora-http-server = { module = "ru.tinkoff.kora:http-server-undertow" }
+kora-config = { module = "ru.tinkoff.kora:config-yaml" }
+kora-json = { module = "ru.tinkoff.kora:json-module" }
+kora-jdbc = { module = "ru.tinkoff.kora:database-jdbc" }
+kora-jackson = { module = "ru.tinkoff.kora:jackson-module" }
+kora-liquibase = { module = "ru.tinkoff.kora:database-liquibase" }
+
+logging-slf4j = { module = "org.slf4j:slf4j-simple", version = "2.0.7" }
+logging-logback = { module = "ch.qos.logback:logback-classic", version = "1.4.8" }
+
+jwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jwt" }
+jwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jwt" }
+jwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jwt" }
+
+postgresql = { module = "org.postgresql:postgresql", version = "42.7.4" }
+bcrypt = { module = "at.favre.lib:bcrypt", version = "0.10.2" }

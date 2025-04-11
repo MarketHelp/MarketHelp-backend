@@ -1,0 +1,9 @@
+services:
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: graphontext
+      POSTGRES_PASSWORD: graphontext
+      POSTGRES_DB: graphontext
+    ports:
+      - "5432:5432"
