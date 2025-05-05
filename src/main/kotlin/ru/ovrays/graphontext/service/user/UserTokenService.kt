@@ -4,6 +4,7 @@ import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import ru.ovrays.graphontext.configuration.AuthProperties
 import ru.ovrays.graphontext.service.util.ClockService
+import ru.ovrays.graphontext.util.KLogging
 import ru.tinkoff.kora.common.Component
 import java.time.temporal.ChronoUnit.MINUTES
 import java.util.*
@@ -54,15 +55,18 @@ class UserTokenService(
             return null
         }
 
-        try {
+        return try {
             val jwtClaims = parser.parseSignedClaims(token)
             val userId = UUID.fromString(jwtClaims.payload.subject)
 
             val isUserExists = userService.isUserExists(userId)
 
-            return userId?.takeIf { isUserExists }
+            userId?.takeIf { isUserExists }
         } catch (e: ExpiredJwtException) {
-            return null
+            logger.warn("Expired JWT token declined", e)
+            null
         }
     }
+
+    companion object : KLogging()
 }

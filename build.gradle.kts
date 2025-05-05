@@ -38,8 +38,16 @@ tasks.withType<KotlinCompile> {
     dependsOn(tasks.openApiGenerate)
 }
 
+tasks.withType<Tar> {
+    archiveFileName = "app.tar"
+}
+
 application {
     mainClass = "ru.ovrays.graphontext.ApplicationKt"
+}
+
+detekt {
+    config.setFrom("detekt.yml")
 }
 
 buildscript {

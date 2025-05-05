@@ -51,6 +51,6 @@ class ProductController(
         productId: UUID,
         productVisualizationId: UUID
     ): GetProductVisualizationApiResponse {
-        return getProductVisualizationOperation.activate(shopId, productId, productId)
+        return getProductVisualizationOperation.activate(shopId, productVisualizationId)
     }
 }
