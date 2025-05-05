@@ -60,9 +60,9 @@ dependencies {
     implementation(libs.kora.jdbc)
     implementation(libs.kora.jackson)
     implementation(libs.kora.liquibase)
+    implementation(libs.kora.logback)
 
     implementation(libs.jwt.api)
-    implementation(libs.logging.logback)
     implementation(libs.postgresql)
     implementation(libs.bcrypt)
 
@@ -70,7 +70,6 @@ dependencies {
     runtimeOnly(libs.jwt.jackson)
 
     ksp(libs.kora.ksp)
-    ksp(libs.logging.slf4j)
 }
 
 openApiGenerate {

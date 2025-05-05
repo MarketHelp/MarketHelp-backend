@@ -1,4 +1,3 @@
-
 db:
   jdbcUrl: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:graphontext}"
   username: ${DATABASE_USERNAME:graphontext}
@@ -7,3 +6,12 @@ db:
 
 liquibase:
   changelog: "liquibase/changelog.yaml"
+
+auth:
+  token:
+    secret: asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4
+    algorithm: HmacSHA256
+    lifetime: 60
+
+storage:
+  directory: visualizations

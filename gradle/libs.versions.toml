@@ -2,7 +2,7 @@
 kotlin = "1.9.25"
 kotlinx = "1.8.1"
 
-kora = "1.1.23"
+kora = "1.1.25"
 jwt = "0.12.6"
 
 [plugins]
@@ -25,9 +25,7 @@ kora-json = { module = "ru.tinkoff.kora:json-module" }
 kora-jdbc = { module = "ru.tinkoff.kora:database-jdbc" }
 kora-jackson = { module = "ru.tinkoff.kora:jackson-module" }
 kora-liquibase = { module = "ru.tinkoff.kora:database-liquibase" }
-
-logging-slf4j = { module = "org.slf4j:slf4j-simple", version = "2.0.7" }
-logging-logback = { module = "ch.qos.logback:logback-classic", version = "1.4.8" }
+kora-logback = { module = "ru.tinkoff.kora:logging-logback" }
 
 jwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jwt" }
 jwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jwt" }

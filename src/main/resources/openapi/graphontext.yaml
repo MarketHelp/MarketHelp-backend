@@ -3,6 +3,468 @@ info:
   title: GraphOnText API
   description: GraphOnText API
   version: 1.0.0
+
 servers:
   - url: 'https://localhost:8080'
+
+tags:
+  - name: auth
+  - name: shop
+  - name: product
+
 paths:
+  /auth/login:
+    post:
+      operationId: login
+      description: User authentication
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCredentials'
+      responses:
+        200:
+          description: Authentication response
+          content:
+            application/json:
+              schema:
+                required:
+                  - token
+                properties:
+                  token:
+                    description: Authentication token
+                    type: string
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+  /auth/register:
+    post:
+      operationId: register
+      description: User registration
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCredentials'
+      responses:
+        200:
+          description: Authentication response
+          content:
+            application/json:
+              schema:
+                required:
+                  - token
+                properties:
+                  token:
+                    description: Authentication token
+                    type: string
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+  /shops:
+    get:
+      operationId: getShops
+      summary: Get all shops
+      tags:
+        - shop
+      security:
+        - bearerAuth: [ ]
+      responses:
+        200:
+          description: Shops response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Shop'
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: createShop
+      summary: Create a shop
+      tags:
+        - shop
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        $ref: '#/components/requestBodies/CreateShop'
+      responses:
+        200:
+          description: Shop response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shop'
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+  /shops/{shopId}:
+    delete:
+      operationId: deleteShop
+      summary: Delete a shop
+      tags:
+        - shop
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: '#/components/parameters/ShopId'
+      responses:
+        200:
+          description: Successfully deleted a shop
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+    patch:
+      operationId: updateShop
+      summary: Update a shop
+      tags:
+        - shop
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: '#/components/parameters/ShopId'
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateShop'
+      responses:
+        200:
+          description: Shop response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shop'
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+  /shops/{shopId}/products:
+    get:
+      operationId: getProducts
+      description: Get shop products
+      tags:
+        - product
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: '#/components/parameters/ShopId'
+      responses:
+        200:
+          description: Products response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+  /shops/{shopId}/products/sync:
+    get:
+      operationId: syncProducts
+      description: Sync shop products
+      tags:
+        - product
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: '#/components/parameters/ShopId'
+      responses:
+        200:
+          description: Products response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+  /shops/{shopId}/products/{productId}/visualizations:
+    get:
+      operationId: getProductVisualizations
+      description: Get product visualizations
+      tags:
+        - product
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: '#/components/parameters/ShopId'
+        - $ref: '#/components/parameters/ProductId'
+      responses:
+        200:
+          description: Product visualizations response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductVisualization'
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+    post:
+      operationId: createProductVisualization
+      description: Create product visualization
+      tags:
+        - product
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: '#/components/parameters/ShopId'
+        - $ref: '#/components/parameters/ProductId'
+      requestBody:
+        $ref: '#/components/requestBodies/CreateProductVisualization'
+      responses:
+        200:
+          description: Product visualization image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+  /shops/{shopId}/products/{productId}/visualizations/{productVisualizationId}:
+    get:
+      operationId: getProductVisualization
+      description: Get product visualization
+      tags:
+        - product
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - $ref: '#/components/parameters/ShopId'
+        - $ref: '#/components/parameters/ProductId'
+        - $ref: '#/components/parameters/ProductVisualizationId'
+      responses:
+        200:
+          description: Product visualization image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        401:
+          $ref: '#/components/responses/Error'
+        400:
+          $ref: '#/components/responses/Error'
+        422:
+          $ref: '#/components/responses/Error'
+        500:
+          $ref: '#/components/responses/Error'
+
+components:
+  parameters:
+    ShopId:
+      in: path
+      name: shopId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ProductId:
+      in: path
+      name: productId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ProductVisualizationId:
+      in: path
+      name: productVisualizationId
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  requestBodies:
+    CreateShop:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+              - apiKey
+            properties:
+              name:
+                type: string
+                description: Shop name
+              apiKey:
+                type: string
+                description: Shop's api key
+    UpdateShop:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                description: Shop name
+    CreateProductVisualization:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - format
+            properties:
+              format:
+                type: string
+                description: Visualization format
+
+  schemas:
+    AuthCredentials:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    Shop:
+      type: object
+      required:
+        - id
+        - name
+        - updatedAt
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - updatedAt
+        - createdAt
+        - hasVisualization
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        hasVisualization:
+          type: boolean
+    ProductVisualization:
+      required:
+        - id
+        - format
+        - updatedAt
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        format:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+  responses:
+    Error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            description: Error response
+            required:
+              - errorCode
+              - errorMessage
+            properties:
+              errorCode:
+                description: Error code
+                type: string
+              errorMessage:
+                description: Error message
+                type: string
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
