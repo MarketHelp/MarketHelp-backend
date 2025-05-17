@@ -89,3 +89,22 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Pull Docker image
+        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Stop and remove existing container
+        run: |
+          docker stop markethelp-backend || true
+          docker rm markethelp-backend || true
+      - name: Run Docker container
+        run: |
+          docker run -d \
+            --name markethelp-backend \
+            --restart until-stopped \
+            -p 8082:8080 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
