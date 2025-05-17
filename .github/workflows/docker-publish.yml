@@ -112,4 +112,4 @@ jobs:
             --name markethelp-backend \
             --restart until-stopped \
             -p 8082:8080 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.tags }} \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
