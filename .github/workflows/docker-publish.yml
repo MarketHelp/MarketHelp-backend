@@ -23,6 +23,8 @@ jobs:
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
+    outputs:
+      tags: ${{ steps.meta.outputs.tags }}
 
     steps:
       - name: Checkout repository
@@ -90,9 +92,12 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
+      - name: Set output
+        run: echo "TAGS=$tags" >> $GITHUB_OUTPUT
+
   deploy:
     runs-on: self-hosted
-    needs: build
+    needs: [ build ]
     steps:
       - name: Pull Docker image
         run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
@@ -107,4 +112,4 @@ jobs:
             --name markethelp-backend \
             --restart until-stopped \
             -p 8082:8080 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.tags }} \
