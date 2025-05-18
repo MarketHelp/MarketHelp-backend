@@ -112,6 +112,7 @@ jobs:
           docker run -d \
             --name markethelp-backend \
             --restart unless-stopped \
-            --net host \
+            --network markethelp-network \
             -p 8082:8080 \
+            -e DATABASE_HOST=markethelp-db \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main \
