@@ -101,7 +101,7 @@ jobs:
     needs: [ build ]
     steps:
       - name: Pull Docker image
-        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{needs.build.outputs.tags}}
+        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
 
       - name: Stop and remove existing container
         run: |
@@ -113,4 +113,4 @@ jobs:
             --name markethelp-backend \
             --restart until-stopped \
             -p 8082:8080 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{needs.build.outputs.tags}} \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main \
