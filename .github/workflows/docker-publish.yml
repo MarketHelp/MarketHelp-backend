@@ -112,5 +112,6 @@ jobs:
           docker run -d \
             --name markethelp-backend \
             --restart unless-stopped \
+            --net host \
             -p 8082:8080 \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main \
