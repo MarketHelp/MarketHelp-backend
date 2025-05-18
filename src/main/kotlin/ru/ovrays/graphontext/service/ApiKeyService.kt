@@ -4,7 +4,6 @@ import ru.ovrays.graphontext.configuration.AuthProperties
 import ru.ovrays.graphontext.repository.ApiKeyRepository
 import ru.ovrays.graphontext.service.util.ClockService
 import ru.tinkoff.kora.common.Component
-import java.util.*
 
 @Component
 class ApiKeyService(
@@ -12,14 +11,18 @@ class ApiKeyService(
     private val authProperties: AuthProperties,
     private val apiKeyRepository: ApiKeyRepository
 ) {
-    fun createApiKey(shopId: UUID, value: String) {
+    fun getApiKey(shopId: Long): String {
+        return apiKeyRepository.getApiKey(shopId)
+    }
+
+    fun createApiKey(shopId: Long, value: String) {
         val now = clockService.now()
         val validUntil = now.plusDays(authProperties.token.lifetime.toLong())
 
         apiKeyRepository.createApiKey(shopId, value, now, validUntil)
     }
 
-    fun deleteApiKey(shopId: UUID) {
+    fun deleteApiKey(shopId: Long) {
         apiKeyRepository.deleteApiKey(shopId)
     }
 }

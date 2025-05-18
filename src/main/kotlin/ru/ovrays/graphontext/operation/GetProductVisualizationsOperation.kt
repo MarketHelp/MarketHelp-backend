@@ -19,7 +19,7 @@ class GetProductVisualizationsOperation(
     private val productVisualizationService: ProductVisualizationService
 ) {
     fun activate(
-        shopId: UUID,
+        shopId: Long,
         productId: UUID
     ): GetProductVisualizationsApiResponse {
         val userId = userAuthService.getCurrentUserId()

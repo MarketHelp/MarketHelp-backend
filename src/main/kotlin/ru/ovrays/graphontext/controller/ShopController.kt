@@ -1,7 +1,6 @@
 package ru.ovrays.graphontext.controller
 
 import ru.ovrays.graphontext.api.ShopApiDelegate
-import ru.ovrays.graphontext.api.ShopApiResponses
 import ru.ovrays.graphontext.api.ShopApiResponses.CreateShopApiResponse
 import ru.ovrays.graphontext.api.ShopApiResponses.DeleteShopApiResponse
 import ru.ovrays.graphontext.api.ShopApiResponses.GetShopsApiResponse
@@ -13,7 +12,6 @@ import ru.ovrays.graphontext.operation.DeleteShopOperation
 import ru.ovrays.graphontext.operation.GetShopsOperation
 import ru.ovrays.graphontext.operation.UpdateShopOperation
 import ru.tinkoff.kora.common.Component
-import java.util.UUID
 
 @Component
 class ShopController(
@@ -33,13 +31,13 @@ class ShopController(
     }
 
     override fun updateShop(
-        shopId: UUID,
+        shopId: Long,
         updateShopRequestDto: UpdateShopRequestDto
     ): UpdateShopApiResponse {
         return updateShopOperation.activate(shopId, updateShopRequestDto.name)
     }
 
-    override fun deleteShop(shopId: UUID): DeleteShopApiResponse {
+    override fun deleteShop(shopId: Long): DeleteShopApiResponse {
         return deleteShopOperation.activate(shopId)
     }
 }

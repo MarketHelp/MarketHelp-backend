@@ -315,8 +315,8 @@ components:
       name: shopId
       required: true
       schema:
-        type: string
-        format: uuid
+        type: integer
+        format: int64
     ProductId:
       in: path
       name: productId
@@ -394,8 +394,8 @@ components:
         - createdAt
       properties:
         id:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         name:
           type: string
         updatedAt:

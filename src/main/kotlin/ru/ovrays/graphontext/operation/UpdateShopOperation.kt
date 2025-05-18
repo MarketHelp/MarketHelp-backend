@@ -8,7 +8,6 @@ import ru.ovrays.graphontext.service.ShopService
 import ru.ovrays.graphontext.service.mapper.ShopMapper
 import ru.ovrays.graphontext.service.user.UserAuthService
 import ru.tinkoff.kora.common.Component
-import java.util.*
 
 @Component
 class UpdateShopOperation(
@@ -16,7 +15,7 @@ class UpdateShopOperation(
     private val shopService: ShopService,
     private val userAuthService: UserAuthService
 ) {
-    fun activate(shopId: UUID, name: String): UpdateShopApiResponse {
+    fun activate(shopId: Long, name: String): UpdateShopApiResponse {
         val userId = userAuthService.getCurrentUserId()
         val isShopExists = shopService.isShopExists(userId, shopId)
 

@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: Партнерский API Маркета
+  description: >
+    API Яндекс Маркета помогает продавцам автоматизировать и упростить работу с
+    маркетплейсом.
+
+
+    В числе возможностей интеграции:
+
+
+    * управление каталогом товаров и витриной,
+
+
+    * обработка заказов,
+
+
+    * изменение настроек магазина,
+
+
+    * получение отчетов.
+  version: LATEST
+  license:
+    name: BSD 3-Clause
+    url: https://opensource.org/license/bsd-3-clause/
+servers:
+  - url: https://api.partner.market.yandex.ru
+externalDocs:
+  description: Документация API
+  url: https://yandex.ru/dev/market/partner-api/doc/
+paths:
+  /campaigns:
+    $ref: paths/campaigns.yaml
+  /businesses/{businessId}/offer-mappings:
+    $ref: paths/businesses_businessId_offer-mappings.yaml

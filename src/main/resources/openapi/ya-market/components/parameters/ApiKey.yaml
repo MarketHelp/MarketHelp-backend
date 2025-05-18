@@ -1,0 +1,6 @@
+name: apiKey
+description: API ключ.
+in: header
+required: true
+schema:
+  type: string

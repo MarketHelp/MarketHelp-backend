@@ -1,0 +1,19 @@
+description: Идентификаторы, которые связаны с отзывом.
+type: object
+properties:
+  orderId:
+    description: Идентификатор заказа на Маркете.
+    type: integer
+    format: int64
+  modelId:
+    description: |
+      { % note warning "Этот параметр устарел" % }
+
+      Не используйте его.
+
+      {% endnote %}
+
+      Идентификатор модели товара.
+    deprecated: true
+    type: integer
+    format: int64

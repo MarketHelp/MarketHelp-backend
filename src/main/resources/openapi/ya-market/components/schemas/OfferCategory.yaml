@@ -1,0 +1,10 @@
+description: |
+  {% note warning "Этот параметр устарел" %}
+
+  Вместо него используйте `marketCategoryId`.
+
+  {% endnote %}
+
+  Категория товара в вашем магазине.
+type: string
+deprecated: true

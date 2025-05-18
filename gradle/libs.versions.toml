@@ -26,6 +26,7 @@ kora-jdbc = { module = "ru.tinkoff.kora:database-jdbc" }
 kora-jackson = { module = "ru.tinkoff.kora:jackson-module" }
 kora-liquibase = { module = "ru.tinkoff.kora:database-liquibase" }
 kora-logback = { module = "ru.tinkoff.kora:logging-logback" }
+kora-client = { module = "ru.tinkoff.kora:http-client-ok"}
 
 jwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jwt" }
 jwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jwt" }

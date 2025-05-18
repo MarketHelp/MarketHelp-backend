@@ -1,5 +1,6 @@
 package ru.ovrays.graphontext.service
 
+import ru.ovrays.graphontext.client.YaMarketClient
 import ru.ovrays.graphontext.model.Shop
 import ru.ovrays.graphontext.repository.ShopRepository
 import ru.ovrays.graphontext.service.util.ClockService
@@ -9,20 +10,21 @@ import java.util.*
 @Component
 class ShopService(
     private val shopRepository: ShopRepository,
+    private val yaMarketClient: YaMarketClient,
     private val clockService: ClockService,
 ) {
-    fun createShop(userId: UUID, name: String): Shop {
-        val id = UUID.randomUUID();
+    fun createShop(userId: UUID, apiKey: String, name: String): Shop {
         val now = clockService.now()
+        val shopId = yaMarketClient.getShopId(apiKey)
 
-        return shopRepository.createShop(id, userId, name, now)
+        return shopRepository.createShop(shopId, userId, name, now)
     }
 
     fun isShopExists(userId: UUID, name: String): Boolean {
         return shopRepository.isShopExists(userId, name)
     }
 
-    fun isShopExists(userId: UUID, shopId: UUID): Boolean {
+    fun isShopExists(userId: UUID, shopId: Long): Boolean {
         return shopRepository.isShopExists(userId, shopId)
     }
 
@@ -30,11 +32,11 @@ class ShopService(
         return shopRepository.getShops(userId)
     }
 
-    fun updateShop(shopId: UUID, name: String): Shop {
+    fun updateShop(shopId: Long, name: String): Shop {
         return shopRepository.updateShop(shopId, name)
     }
 
-    fun deleteShop(shopId: UUID) {
+    fun deleteShop(shopId: Long) {
         shopRepository.deleteShop(shopId)
     }
 }

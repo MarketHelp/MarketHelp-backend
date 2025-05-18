@@ -18,7 +18,7 @@ class CreateProductVisualization(
     private val userAuthService: UserAuthService,
     private val productVisualizationService: ProductVisualizationService
 ) {
-    fun activate(shopId: UUID, productId: UUID, format: String): CreateProductVisualizationApiResponse {
+    fun activate(shopId: Long, productId: UUID, format: String): CreateProductVisualizationApiResponse {
         val userId = userAuthService.getCurrentUserId()
         val isShopExists = shopService.isShopExists(userId, shopId)
 

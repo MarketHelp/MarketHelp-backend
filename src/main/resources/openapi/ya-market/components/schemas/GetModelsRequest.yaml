@@ -1,0 +1,15 @@
+description: Запрос информации о моделях.
+type: object
+required:
+  - models
+properties:
+  models:
+    description: Список моделей.
+    type: array
+    items:
+      description: Идентификатор модели.
+      type: integer
+      format: int64
+      minimum: 0
+      exclusiveMinimum: true
+    minItems: 1
