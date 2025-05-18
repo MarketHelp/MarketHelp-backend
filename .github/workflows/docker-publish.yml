@@ -114,5 +114,5 @@ jobs:
             --restart unless-stopped \
             --network markethelp-network \
             -p 8082:8080 \
-            -e DATABASE_HOST=markethelp-db \
+            -e DATABASE_HOST=172.29.0.2 \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main \
