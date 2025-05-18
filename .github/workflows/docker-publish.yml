@@ -24,7 +24,7 @@ jobs:
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
     outputs:
-      tags: ${{ steps.meta.outputs.tags }}
+      tags: ${{ steps.set-output.outputs.tags }}
 
     steps:
       - name: Checkout repository
@@ -93,14 +93,15 @@ jobs:
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
       - name: Set output
-        run: echo "TAGS=$tags" >> $GITHUB_OUTPUT
+        id: set-output
+        run: echo "tags=${{ steps.meta.outputs.tags }}" >> $GITHUB_OUTPUT
 
   deploy:
     runs-on: self-hosted
     needs: [ build ]
     steps:
       - name: Pull Docker image
-        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{needs.build.meta.outputs.tags}}
+        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{needs.build.outputs.tags}}
 
       - name: Stop and remove existing container
         run: |
@@ -112,4 +113,4 @@ jobs:
             --name markethelp-backend \
             --restart until-stopped \
             -p 8082:8080 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{needs.build.meta.outputs.tags}} \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{needs.build.outputs.tags}} \
