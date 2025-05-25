@@ -2,8 +2,11 @@ package ru.ovrays.graphontext.operation
 
 import ru.ovrays.graphontext.api.ProductApiResponses.CreateProductVisualizationApiResponse
 import ru.ovrays.graphontext.api.ProductApiResponses.CreateProductVisualizationApiResponse.CreateProductVisualization200ApiResponse
+import ru.ovrays.graphontext.model.CreateProductVisualizationRequestDto
 import ru.ovrays.graphontext.model.exception.BusinessException
-import ru.ovrays.graphontext.model.exception.BusinessExceptionCode.SHOP_NOT_FOUND
+import ru.ovrays.graphontext.model.exception.BusinessExceptionCode
+import ru.ovrays.graphontext.service.AiService
+import ru.ovrays.graphontext.service.GraphicService
 import ru.ovrays.graphontext.service.ProductVisualizationService
 import ru.ovrays.graphontext.service.ShopService
 import ru.ovrays.graphontext.service.StorageService
@@ -14,21 +17,43 @@ import java.util.*
 @Component
 class CreateProductVisualization(
     private val shopService: ShopService,
+    private val aiService: AiService,
+    private val graphicService: GraphicService,
     private val storageService: StorageService,
     private val userAuthService: UserAuthService,
     private val productVisualizationService: ProductVisualizationService
 ) {
-    fun activate(shopId: Long, productId: UUID, format: String): CreateProductVisualizationApiResponse {
+    fun activate(
+        shopId: Long,
+        productId: UUID,
+        dto: CreateProductVisualizationRequestDto
+    ): CreateProductVisualizationApiResponse {
         val userId = userAuthService.getCurrentUserId()
         val isShopExists = shopService.isShopExists(userId, shopId)
 
         if (!isShopExists) {
-            throw BusinessException(SHOP_NOT_FOUND)
+            throw BusinessException(BusinessExceptionCode.SHOP_NOT_FOUND)
         }
 
-        val productVisualization = productVisualizationService.createProductVisualization(productId, format)
-        val image = storageService.readFile(productVisualization.filepath)
+        val filename = "$productId-${dto.format}.html"
+        val graphic = createGraphic(shopId, productId, filename, dto.format)
 
-        return CreateProductVisualization200ApiResponse(image)
+        productVisualizationService.createProductVisualization(productId, filename, dto.format)
+
+        return CreateProductVisualization200ApiResponse(graphic)
+    }
+
+    private fun createGraphic(
+        shopId: Long,
+        productId: UUID,
+        filename: String,
+        format: String
+    ): ByteArray {
+        val dataFrame = aiService.getStatistics(shopId, productId, format)
+        val graphic = graphicService.createGraphic(filename, dataFrame, format)
+
+        storageService.writeFile(filename, graphic.content)
+
+        return graphic.content
     }
 }

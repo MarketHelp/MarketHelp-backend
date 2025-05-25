@@ -40,9 +40,8 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjvm-default=all")
     }
 
-    val openapiTasks = tasks.findLast {
-        it.name.contains("openApiGenerate") && it.name != "openApiGenerate"
-    }
+    val openapiTasks = tasks.filter { it.name.contains("openApiGenerate") && it.name != "openApiGenerate" }
+        .toSet()
 
     dependsOn(openapiTasks)
 }
@@ -83,6 +82,10 @@ dependencies {
     implementation(libs.jwt.api)
     implementation(libs.postgresql)
     implementation(libs.bcrypt)
+
+    implementation(libs.kandy.api)
+    implementation(libs.kandy.plot)
+    implementation(libs.kandy.stats)
 
     runtimeOnly(libs.jwt.impl)
     runtimeOnly(libs.jwt.jackson)

@@ -15,3 +15,9 @@ auth:
 
 storage:
   directory: visualizations
+
+httpClient:
+  campaignsApi:
+    url: https://not-working-api.ru
+  businessOfferMappingsApi:
+    url: https://not-working-api.ru

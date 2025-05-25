@@ -43,7 +43,7 @@ class ProductController(
         productId: UUID,
         createProductVisualizationRequestDto: CreateProductVisualizationRequestDto
     ): CreateProductVisualizationApiResponse {
-        return createProductVisualization.activate(shopId, productId, createProductVisualizationRequestDto.format)
+        return createProductVisualization.activate(shopId, productId, createProductVisualizationRequestDto)
     }
 
     override fun getProductVisualization(
