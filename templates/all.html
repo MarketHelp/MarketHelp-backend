@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Карточка Товара</title>
+    <style>
+        body {
+            background-color: #e8d9f5;
+            font-family: Arial, sans-serif;
+            color: #1f1f1f;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            gap: 8rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            background-image: url('%ФОТО_ТОВАРА%');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .info {
+            flex-grow: 1;
+        }
+
+        .rating {
+            color: #805ad5;
+            font-size: 14px;
+        }
+
+        .price {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .section h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .placeholder-chart {
+            width: 100%;
+            height: 200px;
+            background-color: #f3ebff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #805ad5;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .recommendations ol {
+            padding-left: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="block">
+        <div class="card">
+            <div class="product-image"></div>
+            <div class="info">
+                <div><strong>%PRODUCT_NAME%</strong></div>
+                <div class="rating">★★★★★ %PRODUCT_RATING%</div>
+            </div>
+            <div class="price">%PRODUCT_PRICE% ₽</div>
+        </div>
+
+        <div class="section">
+            <h3>Описание</h3>
+            <p>%PRODUCT_DESCRIPTION%</p>
+        </div>
+
+        <div class="section">
+            <h3>Рекомендации</h3>
+            <div class="recommendations">
+                <ol>
+                    <li>%RECOMMENDATION_1%</li>
+                    <li>%RECOMMENDATION_2%</li>
+                    <li>%RECOMMENDATION_3%</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="section">
+            <div class="placeholder-chart">%PIE_CHART%</div>
+            <div class="placeholder-chart" style="height: 160px; margin-top: 1rem;">%BAR_CHART%</div>
+        </div>
+    </div>
+</body>
+</html>

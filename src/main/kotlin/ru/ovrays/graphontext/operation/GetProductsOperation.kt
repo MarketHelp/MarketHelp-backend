@@ -18,7 +18,7 @@ class GetProductsOperation(
     private val productService: ProductService,
     private val userAuthService: UserAuthService
 ) {
-    fun activate(shopId: UUID): GetProductsApiResponse {
+    fun activate(shopId: Long): GetProductsApiResponse {
         val userId = userAuthService.getCurrentUserId()
         val isShopExists = shopService.isShopExists(userId, shopId)
 

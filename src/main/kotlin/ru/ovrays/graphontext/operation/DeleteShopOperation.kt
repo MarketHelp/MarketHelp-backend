@@ -8,7 +8,6 @@ import ru.ovrays.graphontext.service.ApiKeyService
 import ru.ovrays.graphontext.service.ShopService
 import ru.ovrays.graphontext.service.user.UserAuthService
 import ru.tinkoff.kora.common.Component
-import java.util.*
 
 @Component
 class DeleteShopOperation(
@@ -16,7 +15,7 @@ class DeleteShopOperation(
     private val apiKeyService: ApiKeyService,
     private val userAuthService: UserAuthService
 ) {
-    fun activate(shopId: UUID): DeleteShopApiResponse {
+    fun activate(shopId: Long): DeleteShopApiResponse {
         val userId = userAuthService.getCurrentUserId()
         val isShopExists = shopService.isShopExists(userId, shopId)
 

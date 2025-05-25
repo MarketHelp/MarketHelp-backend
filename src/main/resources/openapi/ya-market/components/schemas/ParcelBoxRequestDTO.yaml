@@ -1,0 +1,15 @@
+description: >-
+  Параметр отображает одно грузовое место. Вложенные поля больше не
+  используются, передавайте параметр пустым.
+type: object
+properties:
+  fulfilmentId:
+    description: |
+      {% note warning "Этот параметр устарел" %}
+
+      Не используйте его.
+
+      {% endnote %}
+    type: string
+    pattern: ^[\p{Alnum}- ]*$
+    deprecated: true

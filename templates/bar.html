@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Metrics Chart</title>
+    <style>
+        .chart-container {
+            width: 720px;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        .metric-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #b98aff;
+            color: white;
+            border-radius: 20px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+<div class="chart-container">
+</div>
+
+<script type="text/template" id="metric-template">
+    <div class="metric-bar metric-{percentage}">
+        <span>{label}</span>
+        <span>{percentage}%</span>
+    </div>
+</script>
+
+<script>
+    function renderChart(metrics) {
+        const container = document.querySelector('.chart-container');
+        container.innerHTML = '';
+
+        metrics.forEach(metric => {
+            const barWidth = metric.percentage - 10;
+            const metricElement = document.createElement('div');
+            metricElement.className = 'metric-bar';
+            metricElement.style.width = barWidth + '%';
+            metricElement.innerHTML = `<span>${metric.label}</span><span>${metric.percentage}%</span>`;
+            container.appendChild(metricElement);
+        });
+    }
+
+    x = [%X_ARRAY%]
+    y = [%Y_ARRAY%]
+
+    renderChart(x.map((value, index) => ({ label: value, percentage: y[index] })))
+</script>
+</body>
+</html>

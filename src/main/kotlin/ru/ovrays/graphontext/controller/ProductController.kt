@@ -23,31 +23,31 @@ class ProductController(
     private val getProductVisualizationsOperation: GetProductVisualizationsOperation,
     private val getProductVisualizationOperation: GetProductVisualizationOperation
 ) : ProductApiDelegate {
-    override fun getProducts(shopId: UUID): GetProductsApiResponse {
+    override fun getProducts(shopId: Long): GetProductsApiResponse {
         return getProductsOperation.activate(shopId)
     }
 
-    override fun syncProducts(shopId: UUID): SyncProductsApiResponse {
+    override fun syncProducts(shopId: Long): SyncProductsApiResponse {
         return syncProductsOperation.activate(shopId)
     }
 
     override fun getProductVisualizations(
-        shopId: UUID,
+        shopId: Long,
         productId: UUID
     ): GetProductVisualizationsApiResponse {
         return getProductVisualizationsOperation.activate(shopId, productId)
     }
 
     override fun createProductVisualization(
-        shopId: UUID,
+        shopId: Long,
         productId: UUID,
         createProductVisualizationRequestDto: CreateProductVisualizationRequestDto
     ): CreateProductVisualizationApiResponse {
-        return createProductVisualization.activate(shopId, productId, createProductVisualizationRequestDto.format)
+        return createProductVisualization.activate(shopId, productId, createProductVisualizationRequestDto)
     }
 
     override fun getProductVisualization(
-        shopId: UUID,
+        shopId: Long,
         productId: UUID,
         productVisualizationId: UUID
     ): GetProductVisualizationApiResponse {

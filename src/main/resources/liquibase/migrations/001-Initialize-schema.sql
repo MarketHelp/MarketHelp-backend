@@ -26,7 +26,7 @@ CREATE TABLE user_auth
 
 CREATE TABLE shop
 (
-    id         UUID      NOT NULL,
+    id         INT       NOT NULL,
     user_id    UUID      NOT NULL REFERENCES "user" (id),
     name       TEXT      NOT NULL,
     updated_at TIMESTAMP NOT NULl,
@@ -38,7 +38,7 @@ CREATE TABLE shop
 
 CREATE TABLE api_key
 (
-    shop_id     UUID PRIMARY KEY REFERENCES shop (id),
+    shop_id     INT PRIMARY KEY REFERENCES shop (id),
     value       TEXT      NOT NULL,
     valid_until TIMESTAMP NOT NULL,
     created_at  TIMESTAMP NOT NULl
@@ -47,7 +47,7 @@ CREATE TABLE api_key
 CREATE TABLE product
 (
     id         UUID PRIMARY KEY,
-    shop_id    UUID      NOT NULL REFERENCES shop (id),
+    shop_id    INT      NOT NULL REFERENCES shop (id),
     name       TEXT      NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULl

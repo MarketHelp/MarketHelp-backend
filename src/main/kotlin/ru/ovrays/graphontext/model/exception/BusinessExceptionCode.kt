@@ -13,5 +13,6 @@ enum class BusinessExceptionCode(
     USER_ALREADY_EXISTS(message = "User already exists"),
     SHOP_NOT_FOUND(message = "Shop not found"),
     SHOP_ALREADY_EXISTS(message = "Shop already exists"),
-    PRODUCT_VISUALIZATION_NOT_FOUND(message = "Product visualization not found")
+    PRODUCT_VISUALIZATION_NOT_FOUND(message = "Product visualization not found"),
+    WRONG_API_KEY(message = "Некорректный API ключ")
 }

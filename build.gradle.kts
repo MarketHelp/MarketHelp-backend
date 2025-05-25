@@ -1,5 +1,7 @@
 import org.gradle.api.JavaVersion.VERSION_21
+import org.gradle.internal.extensions.stdlib.capitalized
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -30,12 +32,18 @@ kotlin {
     }
 }
 
+registerOpenApiTask("graphontext", "graphontext.yaml", mode = "kotlin-server")
+registerOpenApiTask("yamarket", "ya-market/ya-market.yaml", includeDtoSuffix = false)
+
 tasks.withType<KotlinCompile> {
     compilerOptions {
         freeCompilerArgs = listOf("-Xjvm-default=all")
     }
 
-    dependsOn(tasks.openApiGenerate)
+    val openapiTasks = tasks.filter { it.name.contains("openApiGenerate") && it.name != "openApiGenerate" }
+        .toSet()
+
+    dependsOn(openapiTasks)
 }
 
 tasks.withType<Tar> {
@@ -69,10 +77,15 @@ dependencies {
     implementation(libs.kora.jackson)
     implementation(libs.kora.liquibase)
     implementation(libs.kora.logback)
+    implementation(libs.kora.client)
 
     implementation(libs.jwt.api)
     implementation(libs.postgresql)
     implementation(libs.bcrypt)
+
+    implementation(libs.kandy.api)
+    implementation(libs.kandy.plot)
+    implementation(libs.kandy.stats)
 
     runtimeOnly(libs.jwt.impl)
     runtimeOnly(libs.jwt.jackson)
@@ -80,22 +93,34 @@ dependencies {
     ksp(libs.kora.ksp)
 }
 
-openApiGenerate {
-    generatorName = "kora"
-    group = "openapi tools"
+fun registerOpenApiTask(
+    name: String,
+    specification: String,
+    mode: String = "kotlin-client",
+    includeDtoSuffix: Boolean = true
+) {
+    val taskName = "openApiGenerate" + name.capitalized()
 
-    inputSpec = "$projectDir/src/main/resources/openapi/graphontext.yaml"
-    outputDir = "$buildDir/generated/openapi"
+    tasks.register(taskName, GenerateTask::class) {
+        generatorName = "kora"
+        group = "openapi tools"
 
-    apiPackage = "ru.ovrays.graphontext.api"
-    modelPackage = "ru.ovrays.graphontext.model"
-    invokerPackage = "ru.ovrays.graphontext.invoker"
+        inputSpec = "$projectDir/src/main/resources/openapi/$specification"
+        outputDir = "$buildDir/generated/openapi"
 
-    modelNameSuffix = "Dto"
-    skipValidateSpec = true
+        apiPackage = "ru.ovrays.$name.api"
+        modelPackage = "ru.ovrays.$name.model"
+        invokerPackage = "ru.ovrays.$name.invoker"
 
-    configOptions = mapOf(
-        "mode" to "kotlin-server",
-        "dateLibrary" to "java8",
-    )
+        if (includeDtoSuffix) {
+            modelNameSuffix = "Dto"
+        }
+
+        skipValidateSpec = true
+
+        configOptions = mapOf(
+            "mode" to mode,
+            "dateLibrary" to "java8",
+        )
+    }
 }

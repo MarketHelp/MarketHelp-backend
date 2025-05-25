@@ -26,6 +26,7 @@ kora-jdbc = { module = "ru.tinkoff.kora:database-jdbc" }
 kora-jackson = { module = "ru.tinkoff.kora:jackson-module" }
 kora-liquibase = { module = "ru.tinkoff.kora:database-liquibase" }
 kora-logback = { module = "ru.tinkoff.kora:logging-logback" }
+kora-client = { module = "ru.tinkoff.kora:http-client-ok" }
 
 jwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jwt" }
 jwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jwt" }
@@ -33,3 +34,6 @@ jwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jwt" }
 
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.4" }
 bcrypt = { module = "at.favre.lib:bcrypt", version = "0.10.2" }
+kandy-api = { module = "org.jetbrains.kotlinx:kandy-api", version = "0.8.0" }
+kandy-plot = { module = "org.jetbrains.kotlinx:kandy-lets-plot", version = "0.8.0" }
+kandy-stats = { module = "org.jetbrains.kotlinx:kotlin-statistics-jvm", version = "0.4.0" }
