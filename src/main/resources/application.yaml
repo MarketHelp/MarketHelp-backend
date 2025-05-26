@@ -14,7 +14,8 @@ auth:
     lifetime: 60
 
 storage:
-  directory: visualizations
+  templates: ${STORAGE_TEMPLATES:templates}
+  output: ${STORAGE_OUTPUT:visualizations}
 
 httpClient:
   campaignsApi:

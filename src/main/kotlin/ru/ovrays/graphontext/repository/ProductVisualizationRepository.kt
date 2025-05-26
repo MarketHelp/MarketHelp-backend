@@ -13,6 +13,8 @@ interface ProductVisualizationRepository : JdbcRepository {
         """
         INSERT INTO product_visualization (id, product_id, format, filepath, created_at, updated_at)
         VALUES (:id, :productId, :format, :filepath, :now, :now)
+        ON CONFLICT (product_id, format, filepath) 
+            DO UPDATE SET updated_at = :now
         RETURNING *
     """
     )

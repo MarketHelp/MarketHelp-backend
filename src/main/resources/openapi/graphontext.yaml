@@ -301,9 +301,9 @@ paths:
                       enum: [ positive, negative ]
       responses:
         200:
-          description: Product visualization image
+          description: Product visualization HTML
           content:
-            image/png:
+            text/html:
               schema:
                 type: string
                 format: binary

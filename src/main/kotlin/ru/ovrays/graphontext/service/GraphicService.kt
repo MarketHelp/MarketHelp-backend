@@ -5,11 +5,11 @@ import org.jetbrains.kotlinx.dataframe.DataFrame
 import ru.ovrays.graphontext.model.Graphic
 import ru.ovrays.graphontext.model.GraphicFormat.ALL
 import ru.tinkoff.kora.common.Component
-import java.nio.file.Files
-import kotlin.io.path.Path
 
 @Component
-class GraphicService {
+class GraphicService(
+    private val storageService: StorageService
+) {
     fun createGraphic(
         filename: String,
         dataFrame: DataFrame<*>,
@@ -23,7 +23,7 @@ class GraphicService {
         filename: String,
         dataFrame: DataFrame<*>,
     ): Graphic {
-        val template = getTemplate(ALL.value)
+        val template = storageService.readTemplate(ALL.value)
         val values = dataFrame.columns()
             .associateWith(DataColumn<*>::values)
             .mapKeys { it.key.name() }
@@ -50,7 +50,7 @@ class GraphicService {
         dataFrame: DataFrame<*>,
         format: String
     ): Graphic {
-        val template = getTemplate(format)
+        val template = storageService.readTemplate(format)
         val columnValues = dataFrame.columns()
             .map(DataColumn<*>::values)
 
@@ -70,12 +70,6 @@ class GraphicService {
         val xColumnValue = column.joinToString()
 
         return template.replace(Y_COLUMN_PLACEHOLDER, xColumnValue)
-    }
-
-    private fun getTemplate(format: String): String {
-        val path = Path("templates/$format.html")
-
-        return Files.readString(path)
     }
 
     companion object {
