@@ -10,8 +10,8 @@ ENV STORAGE_TEMPLATES=/templates
 ENV STORAGE_OUTPUT=/visualizations
 
 USER root
-RUN mkdir /opt/app/lib/visualizations
-RUN chmod 777 /opt/app/lib/visualizations
+RUN mkdir /visualizations
+RUN chmod 777 /visualizations
 USER 2000
 WORKDIR /opt/app/lib
 

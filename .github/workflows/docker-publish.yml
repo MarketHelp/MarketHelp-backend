@@ -115,4 +115,5 @@ jobs:
             --network markethelp-network \
             -p 8082:8080 \
             -e DATABASE_HOST=172.29.0.2 \
+            -v /srv/markethelp/visualizations:/visualizations \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main \
