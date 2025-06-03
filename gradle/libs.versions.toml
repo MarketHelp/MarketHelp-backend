@@ -32,6 +32,7 @@ jwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jwt" }
 jwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jwt" }
 jwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jwt" }
 
+pdfcrowd = { module = "com.pdfcrowd:pdfcrowd", version = "6.5.1" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.4" }
 bcrypt = { module = "at.favre.lib:bcrypt", version = "0.10.2" }
 kandy-api = { module = "org.jetbrains.kotlinx:kandy-api", version = "0.8.0" }

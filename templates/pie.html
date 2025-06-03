@@ -66,7 +66,7 @@
     const y = [%Y_ARRAY%];
     const colors = ["#8a5cd7", "#b58af2", "#c2c2c2"];
     const donut = document.getElementById("donut");
-    const container = document.getElementsByClassName("chart-container")[0]
+    const container = document.getElementsByClassName("chart-container")[0];
 
     const total = y.reduce((sum, val) => sum + val, 0);
     let currentAngle = 0;
@@ -78,17 +78,15 @@
         const startAngle = currentAngle;
         const endAngle = currentAngle + angle;
 
-        // Добавляем сегмент
         gradientParts += `${colors[i % colors.length]} ${startAngle}deg ${endAngle}deg, `;
         currentAngle = endAngle;
 
         const midAngle = (startAngle + endAngle) / 2;
         const rad = (midAngle - 90) * Math.PI / 180;
 
-        const containerCenterX = container.clientWidth / 2; // половина ширины .chart-container
-        const containerCenterY = container.clientHeight / 2; // половина высоты .chart-container
+        const containerCenterX = container.clientWidth / 2;
+        const containerCenterY = container.clientHeight / 2;
 
-        // Наружная метка
         const radiusLabel = 250;
         const xLabel = containerCenterX + radiusLabel * Math.cos(rad);
         const yLabel = containerCenterY + radiusLabel * Math.sin(rad);
@@ -100,7 +98,6 @@
         labelEl.innerText = label;
         donut.parentElement.appendChild(labelEl);
 
-        // Внутренняя проц. метка
         const radiusPercent = 145;
         const xPercent = containerCenterX + radiusPercent * Math.cos(rad);
         const yPercent = containerCenterY + radiusPercent * Math.sin(rad);

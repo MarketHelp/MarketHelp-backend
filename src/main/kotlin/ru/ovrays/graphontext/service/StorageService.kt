@@ -1,17 +1,23 @@
 package ru.ovrays.graphontext.service
 
+import com.pdfcrowd.Pdfcrowd.HtmlToImageClient
+import org.apache.commons.io.output.ByteArrayOutputStream
+import ru.ovrays.graphontext.configuration.CrowdProperties
 import ru.ovrays.graphontext.configuration.StorageProperties
 import ru.tinkoff.kora.common.Component
 import java.nio.file.Files
 import kotlin.io.path.Path
-import kotlin.io.path.createDirectories
 import kotlin.io.path.createParentDirectories
 import kotlin.io.path.writeBytes
 
 @Component
 class StorageService(
-    private val storageProperties: StorageProperties
+    private val crowdProperties: CrowdProperties,
+    private val storageProperties: StorageProperties,
 ) {
+    private val crowdClient = HtmlToImageClient(crowdProperties.name, crowdProperties.key)
+        .setOutputFormat("png")
+
     private val outputPath = Path(storageProperties.output)
     private val templatePath = Path(storageProperties.templates)
 
@@ -24,10 +30,13 @@ class StorageService(
         return filePath.toString()
     }
 
-    fun readFile(filename: String): ByteArray {
+    fun readHtmlToImage(filename: String): ByteArray {
         val filePath = outputPath.resolve(filename)
+        val outputStream = ByteArrayOutputStream()
 
-        return Files.readAllBytes(filePath)
+        crowdClient.convertFileToStream(filePath.toString(), outputStream)
+
+        return outputStream.toByteArray()
     }
 
     fun readTemplate(templateName: String): String {

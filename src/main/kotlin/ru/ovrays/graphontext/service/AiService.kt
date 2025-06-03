@@ -1,8 +1,8 @@
 package ru.ovrays.graphontext.service
 
 import org.jetbrains.kotlinx.dataframe.DataFrame
+import org.jetbrains.kotlinx.dataframe.api.add
 import org.jetbrains.kotlinx.dataframe.api.dataFrameOf
-import org.jetbrains.kotlinx.dataframe.api.emptyDataFrame
 import ru.ovrays.graphontext.client.YaMarketClient
 import ru.ovrays.graphontext.model.GraphicFormat.BAR
 import ru.ovrays.graphontext.model.GraphicFormat.PIE
@@ -26,7 +26,37 @@ class AiService(
         }
 
         else -> {
-            emptyDataFrame<Any>()
+            val recommendations = dataFrameOf("recommendations")(
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+            )
+
+            dataFrameOf(
+                "productName",
+                "productImage",
+                "productRating",
+                "productPrice",
+                "productDescription"
+            )(
+                "Продукт №1",
+                "https://img.freepik.com/premium-photo/" +
+                        "red-shopping-baskets-parcel-box-float-air-smartphone-online-shopping-concept_149391-330.jpg",
+                5,
+                "150",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            )
+                .add(recommendations)
         }
     }
 }

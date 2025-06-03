@@ -31,7 +31,7 @@
             height: 80px;
             background-color: #f0f0f0;
             border-radius: 8px;
-            background-image: url('%ФОТО_ТОВАРА%');
+            background-image: url('%PRODUCT_IMAGE%');
             background-size: cover;
             background-position: center;
         }
@@ -55,8 +55,7 @@
         }
 
         .placeholder-chart {
-            width: 100%;
-            height: 200px;
+            width: 450px;
             background-color: #f3ebff;
             border-radius: 16px;
             display: flex;
@@ -66,6 +65,20 @@
             font-weight: bold;
             font-size: 1.2rem;
             margin-bottom: 1rem;
+            padding: 1rem
+        }
+
+        .bar-placeholder-chart {
+            width: 450px;
+            background-color: #f3ebff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            color: #805ad5;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding-left: 2rem;
+            padding-top: 1rem;
         }
 
         .recommendations ol {
@@ -102,8 +115,165 @@
     </div>
     <div class="block">
         <div class="section">
-            <div class="placeholder-chart">%PIE_CHART%</div>
-            <div class="placeholder-chart" style="height: 160px; margin-top: 1rem;">%BAR_CHART%</div>
+            <div class="placeholder-chart">
+                <style>
+                    .chart-container {
+                        background-color: transparent;
+                        /*border-radius: 24px;*/
+                        position: relative;
+                        width: 360px;
+                        margin-bottom: 2rem;
+                        /*box-sizing: border-box;*/
+                    }
+
+                    .donut-chart {
+                        position: relative;
+                        width: 200px;
+                        height: 200px;
+                        border-radius: 50%;
+                        margin: 0 auto;
+                        margin-top: 20px;
+                    }
+
+                    .donut-chart::after {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 100px;
+                        height: 100px;
+                        background: white;
+                        border-radius: 50%;
+                        transform: translate(-50%, -50%);
+                        z-index: 1;
+                    }
+
+                    .label {
+                        position: absolute;
+                        font-size: 16px;
+                        color: #2d2d2d;
+                        transform: translate(-50%, -50%);
+                        white-space: nowrap;
+                    }
+
+                    .percentage-label {
+                        position: absolute;
+                        font-size: 14px;
+                        color: white;
+                        font-weight: bold;
+                        z-index: 2;
+                        transform: translate(-50%, -50%);
+                    }
+                </style>
+
+                <div class="chart-container">
+                    <div class="donut-chart" id="donut"></div>
+                </div>
+
+                <script>
+                    const x = [%X_PIE_ARRAY%];
+                    const y = [%Y_PIE_ARRAY%];
+                    const colors = ["#8a5cd7", "#b58af2", "#c2c2c2"];
+                    const donut = document.getElementById("donut");
+                    const container = document.getElementsByClassName("chart-container")[0];
+
+                    const total = y.reduce((sum, val) => sum + val, 0);
+                    let currentAngle = 0;
+                    let gradientParts = "";
+
+                    x.forEach((label, i) => {
+                        const percent = y[i];
+                        const angle = (percent / total) * 360;
+                        const startAngle = currentAngle;
+                        const endAngle = currentAngle + angle;
+
+                        gradientParts += `${colors[i % colors.length]} ${startAngle}deg ${endAngle}deg, `;
+                        currentAngle = endAngle;
+
+                        const midAngle = (startAngle + endAngle) / 2;
+                        const rad = (midAngle - 90) * Math.PI / 180;
+
+                        const containerCenterX = container.clientWidth / 2;
+                        const containerCenterY = container.clientHeight / 2;
+
+                        const radiusLabel = 160;
+                        const xLabel = containerCenterX + radiusLabel * Math.cos(rad);
+                        const yLabel = containerCenterY + radiusLabel * Math.sin(rad) + 30;
+
+                        const labelEl = document.createElement("div");
+                        labelEl.className = "label";
+                        labelEl.style.left = `${xLabel}px`;
+                        labelEl.style.top = `${yLabel}px`;
+                        labelEl.innerText = label;
+                        donut.parentElement.appendChild(labelEl);
+
+                        const radiusPercent = 75;
+                        const xPercent = containerCenterX + radiusPercent * Math.cos(rad);
+                        const yPercent = containerCenterY + radiusPercent * Math.sin(rad);
+
+                        const percentEl = document.createElement("div");
+                        percentEl.className = "percentage-label";
+                        percentEl.style.left = `${xPercent}px`;
+                        percentEl.style.top = `${yPercent}px`;
+                        percentEl.innerText = `${percent}%`;
+                        donut.parentElement.appendChild(percentEl);
+                    });
+
+                    donut.style.background = `conic-gradient(${gradientParts.slice(0, -2)})`;
+                </script>
+            </div>
+            <div class="bar-placeholder-chart" style="margin-top: 1rem;">
+                <style>
+                    .bar-chart-container {
+                        width: 300px;
+                        font-family: Arial, sans-serif;
+                        position: relative;
+                        padding: -1rem;
+                    }
+
+                    .metric-bar {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        background-color: #b98aff;
+                        color: white;
+                        border-radius: 20px;
+                        padding: 10px 20px;
+                        margin-bottom: 10px;
+                        font-weight: 500;
+                    }
+                </style>
+
+                <div class="bar-chart-container">
+                </div>
+
+                <script type="text/template" id="metric-template">
+                    <div class="metric-bar metric-{percentage}">
+                        <span>{label}</span>
+                        <span>{percentage}%</span>
+                    </div>
+                </script>
+
+                <script>
+                    function renderChart(metrics) {
+                        const container = document.querySelector('.bar-chart-container');
+                        container.innerHTML = '';
+
+                        metrics.forEach(metric => {
+                            const barWidth = metric.percentage + 10;
+                            const metricElement = document.createElement('div');
+                            metricElement.className = 'metric-bar';
+                            metricElement.style.width = barWidth + '%';
+                            metricElement.innerHTML = `<span>${metric.label}</span><span>${metric.percentage}%</span>`;
+                            container.appendChild(metricElement);
+                        });
+                    };
+
+                    xBar = [%X_BAR_ARRAY%];
+                    yBar = [%Y_BAR_ARRAY%];
+
+                    renderChart(xBar.map((value, index) => ({ label: value, percentage: yBar[index] })));
+                </script>
         </div>
     </div>
 </body>

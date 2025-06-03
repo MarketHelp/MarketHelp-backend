@@ -50,12 +50,12 @@
             metricElement.innerHTML = `<span>${metric.label}</span><span>${metric.percentage}%</span>`;
             container.appendChild(metricElement);
         });
-    }
+    };
 
-    x = [%X_ARRAY%]
-    y = [%Y_ARRAY%]
+    x = [%X_ARRAY%];
+    y = [%Y_ARRAY%];
 
-    renderChart(x.map((value, index) => ({ label: value, percentage: y[index] })))
+    renderChart(x.map((value, index) => ({ label: value, percentage: y[index] })));
 </script>
 </body>
 </html>

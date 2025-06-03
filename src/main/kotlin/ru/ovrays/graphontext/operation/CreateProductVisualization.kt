@@ -3,6 +3,9 @@ package ru.ovrays.graphontext.operation
 import ru.ovrays.graphontext.api.ProductApiResponses.CreateProductVisualizationApiResponse
 import ru.ovrays.graphontext.api.ProductApiResponses.CreateProductVisualizationApiResponse.CreateProductVisualization200ApiResponse
 import ru.ovrays.graphontext.model.CreateProductVisualizationRequestDto
+import ru.ovrays.graphontext.model.GraphicFormat.ALL
+import ru.ovrays.graphontext.model.GraphicFormat.BAR
+import ru.ovrays.graphontext.model.GraphicFormat.PIE
 import ru.ovrays.graphontext.model.exception.BusinessException
 import ru.ovrays.graphontext.model.exception.BusinessExceptionCode
 import ru.ovrays.graphontext.service.AiService
@@ -50,7 +53,15 @@ class CreateProductVisualization(
         format: String
     ): ByteArray {
         val dataFrame = aiService.getStatistics(shopId, productId, format)
-        val graphic = graphicService.createGraphic(filename, dataFrame, format)
+
+        val graphic = if (format == ALL.value) {
+            val pieStatistics = aiService.getStatistics(shopId, productId, PIE.value)
+            val barStatistics = aiService.getStatistics(shopId, productId, BAR.value)
+
+            graphicService.createGraphic(filename, dataFrame, format, pieStatistics, barStatistics)
+        } else {
+            graphicService.createGraphic(filename, dataFrame, format)
+        }
 
         storageService.writeFile(filename, graphic.content)
 

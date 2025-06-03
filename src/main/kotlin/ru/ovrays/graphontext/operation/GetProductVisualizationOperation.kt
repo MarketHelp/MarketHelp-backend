@@ -30,7 +30,7 @@ class GetProductVisualizationOperation(
         }
 
         val productVisualization = productVisualizationService.getProductVisualization(productVisualizationId)
-        val image = storageService.readFile(productVisualization.filepath)
+        val image = storageService.readHtmlToImage(productVisualization.filepath)
 
         return GetProductVisualization200ApiResponse(image)
     }

@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.kora.logback)
     implementation(libs.kora.client)
 
+    implementation(libs.pdfcrowd)
     implementation(libs.jwt.api)
     implementation(libs.postgresql)
     implementation(libs.bcrypt)

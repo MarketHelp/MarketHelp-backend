@@ -22,3 +22,7 @@ httpClient:
     url: https://not-working-api.ru
   businessOfferMappingsApi:
     url: https://not-working-api.ru
+
+crowd:
+  name: mqqqb
+  key: 98d070f600a1a067c8a21744a01618dd
