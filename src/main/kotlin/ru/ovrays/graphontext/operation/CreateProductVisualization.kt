@@ -65,6 +65,6 @@ class CreateProductVisualization(
 
         storageService.writeFile(filename, graphic.content)
 
-        return graphic.content
+        return storageService.readHtmlToImage(filename)
     }
 }
