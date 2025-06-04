@@ -4,8 +4,6 @@ import org.jetbrains.kotlinx.dataframe.DataColumn
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import ru.ovrays.graphontext.model.Graphic
 import ru.ovrays.graphontext.model.GraphicFormat.ALL
-import ru.ovrays.graphontext.model.GraphicFormat.BAR
-import ru.ovrays.graphontext.model.GraphicFormat.PIE
 import ru.tinkoff.kora.common.Component
 
 @Component

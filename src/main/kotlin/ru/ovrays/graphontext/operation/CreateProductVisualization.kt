@@ -38,7 +38,7 @@ class CreateProductVisualization(
             throw BusinessException(BusinessExceptionCode.SHOP_NOT_FOUND)
         }
 
-        val filename = "$productId-${dto.format}.html"
+        val filename = "$productId-${dto.format}.png"
         val graphic = createGraphic(shopId, productId, filename, dto.format)
 
         productVisualizationService.createProductVisualization(productId, filename, dto.format)
@@ -63,8 +63,8 @@ class CreateProductVisualization(
             graphicService.createGraphic(filename, dataFrame, format)
         }
 
-        storageService.writeFile(filename, graphic.content)
+        storageService.writeHtmlToImage(filename, graphic.content)
 
-        return storageService.readHtmlToImage(filename)
+        return storageService.readFile(filename)
     }
 }

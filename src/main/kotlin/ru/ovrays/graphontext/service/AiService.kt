@@ -7,6 +7,7 @@ import ru.ovrays.graphontext.client.YaMarketClient
 import ru.ovrays.graphontext.model.GraphicFormat.BAR
 import ru.ovrays.graphontext.model.GraphicFormat.PIE
 import java.util.*
+import kotlin.random.Random
 
 @Suppress("MagicNumber", "UnusedParameter")
 class AiService(
@@ -18,7 +19,14 @@ class AiService(
         format: String
     ): DataFrame<*> = when (format) {
         BAR.value -> {
-            dataFrameOf("x", "y")("Описание", 50, "Качество", 40, "Упаковка", 60, "Доставка", 80)
+            val values = List(4) { Random.nextInt(30, 80) }
+
+            dataFrameOf("x", "y")(
+                "Описание", values[0],
+                "Качество", values[1],
+                "Упаковка", values[2],
+                "Доставка", values[3]
+            )
         }
 
         PIE.value -> {
