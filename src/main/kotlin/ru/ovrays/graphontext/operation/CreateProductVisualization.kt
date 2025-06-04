@@ -58,9 +58,9 @@ class CreateProductVisualization(
             val pieStatistics = aiService.getStatistics(shopId, productId, PIE.value)
             val barStatistics = aiService.getStatistics(shopId, productId, BAR.value)
 
-            graphicService.createGraphic(filename, dataFrame, format, pieStatistics, barStatistics)
+            graphicService.createHtmlGraphic(filename, dataFrame, format, pieStatistics, barStatistics)
         } else {
-            graphicService.createGraphic(filename, dataFrame, format)
+            graphicService.createHtmlGraphic(filename, dataFrame, format)
         }
 
         storageService.writeHtmlToImage(filename, graphic.content)

@@ -10,18 +10,18 @@ import ru.tinkoff.kora.common.Component
 class GraphicService(
     private val storageService: StorageService,
 ) {
-    fun createGraphic(
+    fun createHtmlGraphic(
         filename: String,
         dataFrame: DataFrame<*>,
         format: String,
         childPieDataFrame: DataFrame<*>? = null,
         childBarDataFrame: DataFrame<*>? = null,
     ): Graphic = when (format) {
-        ALL.value -> createCombinedGraphic(filename, dataFrame, childPieDataFrame!!, childBarDataFrame!!)
-        else -> createSingleGraphic(filename, dataFrame, format)
+        ALL.value -> createCombinedHtmlGraphic(filename, dataFrame, childPieDataFrame!!, childBarDataFrame!!)
+        else -> createSingleHtmlGraphic(filename, dataFrame, format)
     }
 
-    private fun createCombinedGraphic(
+    private fun createCombinedHtmlGraphic(
         filename: String,
         dataFrame: DataFrame<*>,
         childPieDataFrame: DataFrame<*>,
@@ -53,7 +53,7 @@ class GraphicService(
         return Graphic(filename, content.toByteArray())
     }
 
-    private fun createSingleGraphic(
+    private fun createSingleHtmlGraphic(
         filename: String,
         dataFrame: DataFrame<*>,
         format: String

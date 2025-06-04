@@ -23,6 +23,7 @@ class StorageService(
     private val outputPath = Path(storageProperties.output)
     private val templatePath = Path(storageProperties.templates)
 
+    @Synchronized
     fun writeHtmlToImage(filename: String, byteArray: ByteArray): String {
         val inputStream = ByteArrayInputStream(byteArray)
         val outputStream = ByteArrayOutputStream()
